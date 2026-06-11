@@ -1,0 +1,39 @@
+name: 'SFCC Guard'
+description: 'Production safety guard for Salesforce Commerce Cloud — catches critical issues before they reach prod'
+author: 'sfcc-guard'
+
+branding:
+  icon: 'shield'
+  color: 'red'
+
+inputs:
+  cartridges-path:
+    description: 'Path to cartridges folder'
+    required: false
+    default: './cartridges'
+  metadata-path:
+    description: 'Path to metadata/data_impex folder (optional)'
+    required: false
+    default: './data_impex'
+  discount-threshold:
+    description: 'Max allowed discount percentage in promotion XMLs (default: 99)'
+    required: false
+    default: '99'
+  fail-on-warning:
+    description: 'Fail the action on warnings, not just errors'
+    required: false
+    default: 'false'
+  github-token:
+    description: 'GitHub token for PR comments'
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  errors-found:
+    description: 'Number of errors found'
+  warnings-found:
+    description: 'Number of warnings found'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'

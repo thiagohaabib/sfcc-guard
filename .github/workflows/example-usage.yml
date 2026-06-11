@@ -1,0 +1,31 @@
+name: SFCC Guard
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+      - develop
+      - staging
+    paths:
+      - 'cartridges/**'
+      - 'data_impex/**'
+      - 'metadata/**'
+
+jobs:
+  sfcc-guard:
+    name: 'SFCC Production Guard'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run SFCC Guard
+        uses: sfcc-guard/action@v1
+        with:
+          cartridges-path: './cartridges'
+          metadata-path: './data_impex'
+          discount-threshold: '99'
+          fail-on-warning: 'false'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
